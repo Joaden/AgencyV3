@@ -8,7 +8,7 @@ use App\Form\PropertyType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 class AdminPropertyController extends AbstractController
 {
@@ -39,11 +39,10 @@ class AdminPropertyController extends AbstractController
     /**
      * @Route("/admin/property/create", name="admin.property.new")
      */
-    public function new(Request $request)
+    public function new(Property $property, Request $request)
     {
-        /*$property = new Property();
-        //exit(var_dump($property));
-
+        // création manuelle
+        $property = new Property();
         $form = $this->createForm(PropertyType::class, $property);
         $form->handleRequest($request);
         //exit(var_dump($property));
@@ -57,16 +56,16 @@ class AdminPropertyController extends AbstractController
         return $this->render('admin/property/new.html.twig', [
             'property' => $property,
             'form' => $form->createView()
-        ]);*/
+        ]);
     }
 
     /**
-     * @Route("/admin/{id}", name="admin.property.edit", methods="GET|POST")
+     * @Route("/admin/property/{id}", name="admin.property.edit", methods={"GET","POST"})
      * @param Property $property
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function edit(Property $property)
+    public function edit(Property $property, Request $request)
     {
         $form = $this->createForm(PropertyType::class, $property);
         $form->handleRequest($request);
@@ -86,15 +85,16 @@ class AdminPropertyController extends AbstractController
     }
 
     /**
-     * @Route("/admin/property/{id}", name="admin.property.delete")
+     * @Route("/admin/property/{id}", name="admin.property.delete" method={"DELETE"})
      * @param Property $property
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function delete(Property $property, Request $request)
     {
+        // Validation du token csrf pour la securite
         if ($this->isCsrfTokenValid('delete' . $property->getId(), $request->get("_token")))
-        {
-            $this->em->remove();
+        {   
+            $this->em->remove($property);
             $this->em->flush();
             $this->addFlash('success', 'Bien supprimé avec succès');
 

@@ -40,6 +40,7 @@ class PropertyType extends AbstractType
         ]);
     }
 
+    // choix du chauffage
     public function getChoices()
     {
         $choices = Property::HEAT;
