@@ -42,7 +42,7 @@ class AdminPropertyController extends AbstractController
     public function new(Property $property, Request $request)
     {
         // création manuelle
-        $property = new Property();
+       // $property = new Property();
         $form = $this->createForm(PropertyType::class, $property);
         $form->handleRequest($request);
         //exit(var_dump($property));
@@ -60,13 +60,15 @@ class AdminPropertyController extends AbstractController
     }
 
     /**
-     * @Route("/admin/property/{id}", name="admin.property.edit", methods={"GET","POST"})
+     * @Route("/admin/property/{id}", name="admin.property.edit")
      * @param Property $property
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function edit(Property $property, Request $request)
     {
+        //, methods={"GET","POST"})
+        //test debug
         $form = $this->createForm(PropertyType::class, $property);
         $form->handleRequest($request);
 
