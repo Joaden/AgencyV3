@@ -54,7 +54,8 @@ class PropertyRepository extends ServiceEntityRepository
     // Retourne un objet de type QueryBuilder
     // cette methode affecte les autres fonctions find
     private function findVisibleQuery(): QueryBuilder
-    {
+    {   
+        // retourne un objet queryBuilder
         return $this->createQueryBuilder('p')
             ->where('p.sold = false');
     }

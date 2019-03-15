@@ -101,21 +101,20 @@ class PropertyController extends AbstractController
      */
     public function show(Property $property, string $slug): Response
     {
-
         //dans l'annotation : requirements permet de définir des parametres.
         // et on recupere la propriete
         // $property = $this->repository->find($id);
-
         if ($property->getSlug() !==$slug) {
+            // redirection vers une route
+            // Appel du slug
             return $this->redirectToRoute('property.show', [
                 'id' => $property->getId(),
                 'slug' => $property->getSlug()
             ], 301);
         }
-
         // retourne la page show avec le menu properties
         return $this->render('property/show.html.twig', [
-            'property' => '$property',
+            'property' => $property,
             'current_menu' => 'properties'
         ]);
     }

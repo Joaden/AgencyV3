@@ -210,6 +210,7 @@ class Property
 
     public function getHeatType(): string
     {
+        //renvoi this =le type 
         return self::HEAT[$this->heat];
     }
 
