@@ -18,7 +18,7 @@ class AdminPropertyController extends AbstractController
      */
     private $repository;
 
-    // j'ai besoin de recuperer donc j instancie un repository
+    // j'ai besoin de recuperer donc j insjecte repository
     public function __construct(PropertyRepository $repository, ObjectManager $em)
     {
         $this->repository = $repository;
@@ -41,7 +41,7 @@ class AdminPropertyController extends AbstractController
      */
     public function new(Request $request)
     {
-        $property = new Property();
+        /*$property = new Property();
         //exit(var_dump($property));
 
         $form = $this->createForm(PropertyType::class, $property);
@@ -57,16 +57,16 @@ class AdminPropertyController extends AbstractController
         return $this->render('admin/property/new.html.twig', [
             'property' => $property,
             'form' => $form->createView()
-        ]);
+        ]);*/
     }
 
     /**
-     * @Route("/admin/property/{id}", name="admin.property.edit", methods="GET|POST")
+     * @Route("/admin/{id}", name="admin.property.edit", methods="GET|POST")
      * @param Property $property
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function edit(Property $property, Request $request)
+    public function edit(Property $property)
     {
         $form = $this->createForm(PropertyType::class, $property);
         $form->handleRequest($request);
@@ -76,6 +76,8 @@ class AdminPropertyController extends AbstractController
             $this->addFlash('success', 'Bien modifié avec succès');
             return $this->redirectToRoute('admin.property.index');
         }
+        // retourne la page d'édition
+        //return $this->render('admin/property/edit.html.twig', compact('property'));
 
         return $this->render('admin/property/edit.html.twig', [
             'property' => $property,

@@ -12,6 +12,7 @@ class PropertyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // $builder rajoute des champs avec toutes les proprietes de lentitée
         $builder
             ->add('title')
             ->add('description')
