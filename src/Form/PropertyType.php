@@ -27,7 +27,11 @@ class PropertyType extends AbstractType
             ->add('city')
             ->add('address')
             ->add('postal_code')
+            ->add('class_energie', ChoiceType::class, [
+                'choices' => $this->getChoicesClass()
+            ])
             ->add('sold')
+            ->add('parking')
             ->add('created_at')
         ;
     }
@@ -44,6 +48,17 @@ class PropertyType extends AbstractType
     public function getChoices()
     {
         $choices = Property::HEAT;
+        $output = [];
+        foreach($choices as $k => $v) {
+            $output[$v] = $k;
+        }
+        return $output;
+    }
+
+    // choix du chauffage
+    public function getChoicesClass()
+    {
+        $choices = Property::ClassE;
         $output = [];
         foreach($choices as $k => $v) {
             $output[$v] = $k;

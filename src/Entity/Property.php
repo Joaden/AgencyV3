@@ -19,6 +19,16 @@ class Property
         1 => 'Gaz',
         2 => 'Bois'
     ];
+    const ClassE = [
+        0 => '',
+        1 => 'A',
+        2 => 'B',
+        3 => 'C',
+        4 => 'D',
+        5 => 'E',
+        6 => 'F',
+        7 => 'G'
+    ];
 
     /**
      * @ORM\Id()
@@ -71,25 +81,36 @@ class Property
     private $heat;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=250)
      */
     private $city;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=250)
      */
     private $address;
 
     /**
      * @Assert\Regex("/^[0-9]{5}$/")
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=10)
      */
     private $postal_code;
+
+    /**
+     * @Assert\Regex("/^[0-6]{6}$/")
+     * @ORM\Column(type="string", length=6, nullable=true)
+     */
+    private $class_energie;
 
     /**
      * @ORM\Column(type="boolean", options={"default": false})
      */
     private $sold = false;
+    
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private $parking = false;
 
     /**
      * @ORM\Column(type="datetime")
@@ -257,6 +278,19 @@ class Property
 
         return $this;
     }
+    
+    
+    public function getClassEnergie(): ?string
+    {
+        return $this->class_energie;
+    }
+
+    public function setClassEnergie(string $class_energie): self
+    {
+        $this->class_energie = $class_energie;
+
+        return $this;
+    }
 
     public function getSold(): ?bool
     {
@@ -269,6 +303,19 @@ class Property
 
         return $this;
     }
+    
+    public function getParking(): ?bool
+    {
+        return $this->parking;
+    }
+
+    public function setParking(bool $parking): self
+    {
+        $this->parking = $parking;
+
+        return $this;
+    }
+    
 
     public function getCreatedAt(): ?\DateTimeInterface
     {

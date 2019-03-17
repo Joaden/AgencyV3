@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 use App\Entity\Property;
+use Symfony\Component\Security\Csrf\CsrfTokenManager;
 
 // class abstract qui se voit injecter le container
 class HomeController extends AbstractController
