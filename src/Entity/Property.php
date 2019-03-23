@@ -100,7 +100,7 @@ class Property
      * @Assert\Regex("/^[0-6]{6}$/")
      * @ORM\Column(type="string", length=6, nullable=true)
      */
-    private $class_energie;
+    private $class_energy;
 
     /**
      * @ORM\Column(type="boolean", options={"default": false})
@@ -280,14 +280,14 @@ class Property
     }
     
     
-    public function getClassEnergie(): ?string
+    public function getClassEnergy(): ?string
     {
-        return $this->class_energie;
+        return $this->class_energy;
     }
 
-    public function setClassEnergie(string $class_energie): self
+    public function setClassEnergy(string $class_energy): self
     {
-        $this->class_energie = $class_energie;
+        $this->class_energy = $class_energy;
 
         return $this;
     }
