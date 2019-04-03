@@ -15,6 +15,9 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Nombre de biens : </th>              
+            </tr>
+            <tr>
                 <th>Titre du bien</th>
                 <th>Actions</th>
             </tr>
@@ -23,7 +26,7 @@
         {% for property in properties %}
         <tr>
             <td>{{ property.title }}</td>        
-            <td>    <!-- le liens est une route par id-->
+            <td>    <!-- le liens est une route par id, pour concaténer avec twig j'utilise la tilde-->
                 <a href="{{ path('admin.property.edit', {id: property.id}) }}" class="btn btn-secondary">Editer</a>
                 <form method="post" action="{{ path('admin.property.delete', {id: property.id}) }}" style="display: inline-block" onsubmit="return confirm('Etes vous vraiment sûr?')">
                     <input type="hidden" name="_method" value="DELETE">

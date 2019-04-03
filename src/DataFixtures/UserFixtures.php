@@ -26,6 +26,7 @@ class UserFixtures extends Fixture
         // fixtures servent à remplir la base de donnees
         $user = new User();
         $user->setUsername('test');
+        // on utilise une méthode encoder de la class encodePassword avec des parametress
         $user->setPassword($this->encoder->encodePassword($user, 'mdproot'));
         $manager->persist($user);
         $manager->flush();

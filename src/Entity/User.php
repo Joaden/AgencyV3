@@ -77,7 +77,7 @@ class User implements UserInterface,\Serializable
     }
 
     /**
-     * permet de supprimer des données sensible dans la DB
+     * Remove the sensitive data from te user
      * return array('ROLE_USER')
      * @return 
      */
@@ -117,6 +117,6 @@ class User implements UserInterface,\Serializable
             $this->id,
             $this->username,
             $this->password
-            ) = unserialized($serialized, ['allowed_classes' => false]);
+            ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 }

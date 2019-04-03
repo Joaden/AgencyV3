@@ -6,6 +6,7 @@ use App\Entity\Property;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Entity\PropertySearch;
 
 /**
  * @method Property|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,20 +23,48 @@ class PropertyRepository extends ServiceEntityRepository
 
     //nouvelle methode public
     /**
-      * @return Property[]
+      * @return Query
       */
-    public function findAllVisible(): array
+    public function findAllVisibleQuery(PropertySearch $search)
     {
-        return $this->findVisibleQuery()
-            //conditions
-            //->Where('p.sold = false')
-            //->setParameter('val', $value)
-            //->orderBy('p.id', 'ASC')
-            //->setMaxResults(10)
-            //recupere la requete
-            ->getQuery()
-            // recup le resultat
-            ->getResult();
+        $query = $this->findVisibleQuery();
+            
+        if ($search->getMaxPrice()) {
+            $query = $query
+                ->andWhere('p.price <= :maxprice')
+                ->setParameter('maxprice', $search->getMaxPrice());
+        }
+
+        if ($search->getMinSurface()) {
+            $query = $query
+                ->andWhere('p.surface >= :minsurface')
+                ->setParameter('minsurface', $search->getMinSurface());
+        }
+
+        if ($search->getOptions()->count() > 0) 
+        {
+            $k = 0;
+            foreach($search->getOptions() as $option)
+            {
+                //dump($k);
+                $k++;
+                $query = $query
+                    ->andWhere(":option$k MEMBER OF p.options")
+                    ->setParameter("option$k", $option);
+            }
+        }
+
+        return $query->getQuery();
+            
+        //conditions
+        //->Where('p.sold = false')
+        //->setParameter('val', $value)
+        //->orderBy('p.id', 'ASC')
+        //->setMaxResults(10)
+        //recupere la requete
+        //->getQuery();
+        // recup le resultat
+        //->getResult();
     }
 
     /**

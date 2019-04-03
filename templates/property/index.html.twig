@@ -3,21 +3,45 @@
 {% block title 'Tous nos bien' %}
 
 {% block body %}
-    <div class="container">
-        <h1>Voir tous nos biens</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur explicabo iste iure nihil nobis ratione repellat repudiandae ullam unde voluptates? Alias consequatur deserunt nostrum pariatur saepe! At expedita quod vero.</p>
-    </div>
-
-    <div class="container">
-        <h2>Les derniers biens</h2>
-        <div class="row flex">
-        <p>carrousel des bien par 3, barre de criteres de recherche sur la gauche, nav bar fixed à chaque pages, en dessous du carrousel info sur fonctionnalité du site acheter louer etc, footer avec form/etc, </p>
-        <p>se referer a la maquette</p>
-            {% for property in properties %}
-                <div class="col-3">
-
+    <div class="jumbotron">
+        <div class="container">
+            {{ form_start(form) }}
+            <div class="form-row align-items-end">
+                <div class="col">
+                    {{ form_row(form.minSurface) }}
                 </div>
-            {% endfor %}
+                <div class="col">
+                    {{ form_row(form.maxPrice) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.options) }}
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <button class="btn btn-primary">Rechercher</button>
+                    </div>
+                </div>
+            </div>
+            {{ form_end(form) }}
         </div>
     </div>
+        <div class="container mt-4">
+            <h1>Voir tous nos biens</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur explicabo iste iure nihil nobis ratione repellat repudiandae ullam unde voluptates? Alias consequatur deserunt nostrum pariatur saepe! At expedita quod vero.</p>
+            
+            <div class="row">
+                {% for property in properties %}
+                    <div class="col-md-4">
+                        {% include 'property/_property.html.twig' %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="pagination">
+                {{ knp_pagination_render(properties) }}
+            </div>
+
+            </div>
+        </div>
+
 {% endblock %}

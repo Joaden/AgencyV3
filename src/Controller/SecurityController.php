@@ -14,6 +14,9 @@ class SecurityController extends AbstractController {
      */
     public function login(AuthenticationUtils $authenticationUtils) 
     {   
+        // Récupère les erreurs et username
+        // dans le login.html.twig le message d'erreur est affiché
+        // messageKey ou message d'erreur traduit
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
         return $this->render('security/login.html.twig', [
