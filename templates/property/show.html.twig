@@ -22,6 +22,7 @@
                 <h2>Caractéristique</h2>
                 {% if property.filename %}
                 <!-- <img src="/images/properties/{{ property.filename }}" alt="card-img-top" style="width: 100%; height:auto;"> -->
+                <!-- On utilise imagine_filter pour redimensionner l'image et vich uploader pour uploader l'image dans un dossier avec une quality medium-->
                     <img src="{{ vich_uploader_asset(property, 'imageFile') | imagine_filter('medium') }}" alt="card-img-top" style="width: 100%; height:auto;">
                 {% else %}
                     <img src="{{ 'images/properties/empty.jpg' | imagine_filter('medium') }}" alt="card-img-top" style="width: 100%; height:auto;">

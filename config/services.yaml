@@ -33,6 +33,7 @@ services:
         arguments:
             $twig: '@twig'
         
+    # service pour la gestion du cache avec des event
     App\Listener\ImageCacheSubscriber:
         tags:
         - { name: doctrine.event_subscriber }

@@ -14,6 +14,11 @@ liip_imagine:
           mode:          outbound
   #        allow_upscale: true
 
+# ce fichier de config sert a filtrer les opérations, 
+# thumb = miniature, quality= 75, filter : thumbnail
+# On redimension l'image
+
+
 #liip_imagine:
 #    # valid drivers options include "gd" or "gmagick" or "imagick"
 #    driver: "gd"

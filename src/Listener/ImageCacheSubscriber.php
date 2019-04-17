@@ -23,11 +23,14 @@ class ImageCacheSubscriber implements EventSubscriber {
      */
     private $uploaderHelper;
 
+    // j'injecte les class dans le construct pour gérer la gestion de cache
     public function __construct(CacheManager $cacheManager, UploaderHelper $uploaderHelper)
     {
         $this->cacheManager = $cacheManager;
         $this->uploaderHelper = $uploaderHelper;
     }
+
+    // je retourne les events (entité modifiée ou ajoutée)
     public function getSubscribedEvents()
     {
         return [
@@ -45,8 +48,8 @@ class ImageCacheSubscriber implements EventSubscriber {
             return;
         }
         $this->cacheManager->remove($this->uploaderHelper->asset($entity, 'imageFile'));
-
     }
+
 
     public function preUpdate(PreUpdateEventArgs $args)
     {
@@ -58,7 +61,9 @@ class ImageCacheSubscriber implements EventSubscriber {
             return;
         }
         if ($entity->getImageFile() instanceof UploadedFile );
-        {
+        {   
+            // if de type uploaderfile je reproduit la logique this->cachemanager remove, jutilise uploaederhelper 
+            //que je sauvegarde dans $entity avec le parametre imageFile
             $this->cacheManager->remove($this->uploaderHelper->asset($entity, 'imageFile'));
         }
     }

@@ -9,6 +9,8 @@ vich_uploader:
             namer: Vich\UploaderBundle\Naming\UniqidNamer
 
 #ce package est créé lors du require vich.... pour la gestion d'image
+# le namer est une clef unique qui permet de supprimer la image quand je la remplace 
+
     #mappings:
     #    products:
     #        uri_prefix: /images/products

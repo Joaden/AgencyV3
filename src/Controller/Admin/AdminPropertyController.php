@@ -15,6 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class AdminPropertyController extends AbstractController
 {
@@ -90,7 +92,7 @@ class AdminPropertyController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) 
         {
-            
+            // 
             $this->em->flush();
             $this->addFlash('success', 'Bien modifié avec succès');
             return $this->redirectToRoute('admin.property.index');

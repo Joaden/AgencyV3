@@ -55,7 +55,7 @@ class Property
     /**
      * @var File|null
      * @Vich\UploadableField(mapping="property_image", fileNameProperty="filename")
-     * 
+     * @Assert\Image(mimeTypes="image/jpeg")
      */
     private $imageFile;
     //fichier file, enregistré dans la variable filename
@@ -430,7 +430,7 @@ class Property
      * @return Property
      */
     public function setImageFile(?File $imageFile): Property
-    {   // Si l'image est de type uploadedFile, on m'est a jour le updated_at pour la persistance
+    {   // Si l'image est de type uploadedFile, no m'est a jour le updated_at pour la persistance
         $this->imageFile = $imageFile;
         if ($this->imageFile instanceof UploadedFile)
         {
