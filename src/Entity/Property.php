@@ -5,10 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 use Cocur\Slugify\Slugify;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -48,13 +50,16 @@ class Property
      * @ORM\Column(type="string", length=255)
      */
     private $filename;
+    // variable de l'image 
 
     /**
      * @var File|null
      * @Vich\UploadableField(mapping="property_image", fileNameProperty="filename")
-     * @Assert\Image(mimeTypes="image/jpeg/png/jpg")
+     * 
      */
     private $imageFile;
+    //fichier file, enregistré dans la variable filename
+
 
     /**
      * @ORM\Column(type="string", length=250)
@@ -425,11 +430,11 @@ class Property
      * @return Property
      */
     public function setImageFile(?File $imageFile): Property
-    {
+    {   // Si l'image est de type uploadedFile, on m'est a jour le updated_at pour la persistance
         $this->imageFile = $imageFile;
         if ($this->imageFile instanceof UploadedFile)
         {
-            $this->uploaded_at = new \DateTime('now');
+            $this->updated_at = new \DateTime('now');
         }
 
         return $this;

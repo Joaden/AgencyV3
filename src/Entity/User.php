@@ -3,12 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields= {"email"}, message= "l'email que vous avez indiqué est déjà utilisé!")
  */
-class User implements UserInterface,\Serializable
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -18,18 +21,54 @@ class User implements UserInterface,\Serializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=250)
+     * @ORM\Column(type="string", length=255)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * 
      */
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min="8", minMessage="Votre message doit faire minimum 8 caractères!")
+     * 
      */
     private $password;
+
+    /**
+     * @Assert\EqualTo(propertyPath="password", message="Votre mot de passe n'est pas identique!")
+     */
+    public $confirm_password;
+
+    /**
+     * @ORM\Column(type="array")
+     * 
+     */
+    private $roles;
+
+    public function __construct()
+    {
+        $this->roles = array('ROLE_ADMIN');
+    }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
     }
 
     public function getUsername(): ?string
@@ -56,67 +95,12 @@ class User implements UserInterface,\Serializable
         return $this;
     }
 
-    /**
-     * Renvoi list de Role du User
-     * return array('ROLE_USER')
-     * @return (Role|string)
-     */
-    public function getRoles()
-    {
-        return ['ROLE_ADMIN'];
-    }
-    
-    /**
-     * Return salt used to encode the password
-     * return null if password was not encoded
-     * @return string|null The salt
-     */
-    public function getSalt()
-    {
-        return null;
-    }
+    public function eraseCredentials() {}
 
-    /**
-     * Remove the sensitive data from te user
-     * return array('ROLE_USER')
-     * @return 
-     */
-    public function eraseCredentials()
-    {
-    
-    }
+    public function getSalt() {}
 
-    /**
-     * String representation of object
-     * @link 
-     * @return string the string representation of the object or null
-     * @since 5.1.0
-     */
-    public function serialize()
+    public function getRoles() 
     {
-        // TODO serialize() method 
-        return serialize([
-            $this->id,
-            $this->username,
-            $this->password
-        ]);
-    }
-
-     /**
-     * Construct the object
-     * @link 
-     * @param string $serialized <p>
-     * String representation object </p>
-     * @return void
-     * @since 5.1.0
-     */
-    public function unserialize($serialized)
-    {
-        // TODO unserialize() method
-        list (
-            $this->id,
-            $this->username,
-            $this->password
-            ) = unserialize($serialized, ['allowed_classes' => false]);
+        return $this->roles;
     }
 }

@@ -26,9 +26,13 @@ class ContactNotification {
     {
         // instance de swiftmessage + nom du bien
         $message = (new \Swift_Message('Agence : ' . $contact->getProperty()->getTitle()))
+        // sender
         ->setFrom('noreply@agence.fr')
+        // destinataire
         ->setTo('contact@agence.fr')
+        // Email de l'utilisateur
         ->setReplyTo($contact->getEmail())
+        // injection du html
         ->setBody($this->renderer->render('emails/contact.html.twig', [
             'contact' => $contact
         ]), 'text/html');

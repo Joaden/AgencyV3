@@ -139,7 +139,7 @@ class PropertyController extends AbstractController
             ], 301);
         }
 
-        
+        // traitement de l'envoi de mail
         $contact = new Contact();
         $contact->setProperty($property);
         $form = $this->createForm(ContactType::class, $contact);

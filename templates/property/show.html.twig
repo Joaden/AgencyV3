@@ -5,6 +5,7 @@
 {%  block body %}
 <div class="jumbotron">
     <div class="container">
+        
     {% for message in app.flashes('success') %}
         <div class="alert alert-success">
             {{ message }}

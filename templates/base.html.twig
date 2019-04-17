@@ -5,14 +5,14 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
-
+        <link rel="stylesheet" href="">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
     <!-- body navbar fixed-top-->
 
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #9933ff;">
-        <a class="navbar-brand" href="{{ path('home') }}">Mon Agence</a>
+        <a class="navbar-brand" href="{{ path('home') }}">Agence</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -24,39 +24,55 @@
                     <a class="nav-link {% if current_menu is defined and current_menu == 'properties' %}active{% endif %}" href="{{ path('property.index') }}">Acheter</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">Louer</a>
+                    <a class="nav-link" href="{{ path('louer') }}">Louer</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Contact 
+                        Informations 
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">A Propos de nous</a>
-                        <a class="dropdown-item" href="#">Informations</a>
+                        <a class="dropdown-item" href="{{ path('about') }}">A Propos de nous</a>
+                        <a class="dropdown-item" href="{{ path('infos') }}">Informations</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Nous Contacter</a>
+                        <a class="dropdown-item" href="{{ path('contact') }}">Nous Contacter</a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <!--<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
-                    <a class="nav-link " href="#" tabindex="1" aria-disabled="true">Nos biens</a>
-                </li>
             </ul>
-            {% if app.user %}
+            {% if not app.user %}
             <ul class="navbar-nav">
+                
                 <li class="nav-item">
-                    <a href="{{ path('logout') }}" class="nav-link">Se déconnecter</a>
+                    <a class="nav-link" href="{{ path('security_registration') }}">S'inscrire</a>
                 </li>
-            </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('security_login')}}">Se connecter</a>
+                </li>
+            {% else %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Bienvenue {{ app.user.username }}</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('admin.property.index') }}">Gérer mes biens</a>
+                </li>
+                <li class="nav-item active">
+                    <a href="#" class="nav-link">Mes Emails</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('security_logout')}}">Se déconnecter</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('account')}}">Mon compte</a>
+                </li>
             {% endif %}
-            <form class="form-inline my-2 my-lg-0">
+            </ul>
+            <!-- <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-            <li class="nav-item">
+            </form> -->
+            <!-- <li class="nav-item">
                 
                 <button type="button" class="btn btn-secondary float-right"><a class="nav-link" href="#">Compte</a></button>
-            </li>
+            </li> -->
         </div>
     </nav>
         <!-- endbody navbar -->
@@ -65,14 +81,24 @@
         {% endblock %}
     
         {% block footer %}{% endblock %}
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
 <script>
-    $('select').select2();    
+    $('select').select2();
+    let $contactAgence = $('#contactAgence')
+    $('#contactAgence').click(e => {
+    e.preventDefault();
+    $('#contactForm').slideDown();
+    $contactAgence.slideUp();
+    })
 </script>
+
+    <script src="{{ asset('build/app.js') }}"></script>
+    
         {% block javascripts %}{% endblock %}
 
     </body>
